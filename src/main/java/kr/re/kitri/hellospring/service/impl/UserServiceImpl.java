@@ -25,4 +25,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectAllUsers();
 	}
 
+	@Override
+	public User registUser(User user) {
+		// TODO Auto-generated method stub
+		return userDao.insertUser(user);
+	}
+
 }

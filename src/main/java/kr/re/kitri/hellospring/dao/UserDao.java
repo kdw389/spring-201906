@@ -1,20 +1,32 @@
 package kr.re.kitri.hellospring.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import kr.re.kitri.hellospring.model.User;
 
 @Repository
 public class UserDao {
-
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
 	public User selectUserByKey(Integer userId) {
-		
-		// 데이터를 확보 .. from anywhere
-		
-		User user = new User(userId, "김동욱", 30);
+		String tmpSql = "select * from user where userId = ?";
+		User user = jdbcTemplate.queryForObject(tmpSql, new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new User(rs.getInt(1), rs.getString(2), rs.getInt(3));
+			}
+			
+		}, userId);
 		return user;
 	}
 	
@@ -28,5 +40,12 @@ public class UserDao {
 		listOfUser.add(new User(6, "애간장", 15));
 		listOfUser.add(new User(7, "고길동", 16));
 		return listOfUser;
+	}
+
+	public User insertUser(User user) {
+	    String tmpSql = "insert into user(userid,username,age) values(?,?,?)";
+	    jdbcTemplate.update(tmpSql, user.getUserid(), user.getUsername(), user.getAge());
+	    System.out.println(tmpSql);
+		return user;
 	}
 }
