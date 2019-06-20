@@ -2,10 +2,11 @@ package kr.re.kitri.hellospring.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,8 @@ import kr.re.kitri.hellospring.service.UserService;
 @ResponseBody	//body 자체를 응답할때사용
 public class UserController {
 	
-	
+	private static final Logger log =
+			 LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private UserService userService;
 	
@@ -46,6 +48,7 @@ public class UserController {
 	// 사용자 등록
 	@PostMapping("/users")
 	public User registUser(@RequestBody User user) {
+		log.debug(user.getUsername());
 		return userService.registUser(user);
 	}
 	// 사용자 수정
