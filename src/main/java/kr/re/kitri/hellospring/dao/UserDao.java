@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import kr.re.kitri.hellospring.exception.BizException;
 import kr.re.kitri.hellospring.model.User;
 
 @Repository
@@ -19,15 +21,20 @@ public class UserDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	public User selectUserByKey(Integer userId) {
-		String tmpSql = "select * fro user where userId = ?";
-		User user = jdbcTemplate.queryForObject(tmpSql, new RowMapper<User>() {
-			@Override
-			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new User(rs.getInt(1), rs.getString(2), rs.getInt(3));
-			}
-			
-		}, userId);
-		return user;
+		String tmpSql = "select * from user where userId = ?";
+		try {
+			User user = jdbcTemplate.queryForObject(tmpSql, new RowMapper<User>() {
+				@Override
+				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+					return new User(rs.getInt(1), rs.getString(2), rs.getInt(3));
+				}
+				
+			}, userId);
+			return user;
+		} catch (DataAccessException e) {
+			throw new BizException("사용자 상세조회 에러", e);
+		}
+		
 	}
 	
 	public List<User> selectAllUsers(){
