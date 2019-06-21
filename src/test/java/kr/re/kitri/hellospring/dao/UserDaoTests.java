@@ -18,7 +18,7 @@ public class UserDaoTests {
 	
 	@Test
 	public void testInsertUser() {
-		User user = new User(500, "테스트계정", 32);
+		User user = new User(1000, "테스트계정", 32);
 		User returned = userdao.insertUser(user);
 		//괄호안에 있는게 참인지를 Check
 		//Assert.assertTrue(user.getUserid() == returned.getUserid());

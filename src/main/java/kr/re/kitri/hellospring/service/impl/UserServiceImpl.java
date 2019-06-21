@@ -20,12 +20,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.selectUserByKey(userId);
 	}
 	
-	@Override
-	public List<User> searchUsers() {
-		// TODO Auto-generated method stub
-		return userDao.selectAllUsers();
-	}
-
+	/*
+	 * @Override public List<User> searchUsers() { // TODO Auto-generated method
+	 * stub return userDao.selectAllUsers(); }
+	 */
 	@Override
 	public User registUser(User user) {
 		// TODO Auto-generated method stub

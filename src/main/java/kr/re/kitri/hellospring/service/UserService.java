@@ -7,7 +7,7 @@ import kr.re.kitri.hellospring.model.User;
 public interface UserService {
 
 	User searchUserByUserid(Integer userId);
-	List<User> searchUsers();
+	//List<User> searchUsers();
 	User registUser(User user);
 	
 }

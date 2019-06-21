@@ -31,12 +31,12 @@ public class UserController {
 	}
 	
 	// 사용자 전체보기
-	@GetMapping("/users")
-	public List<User> getAllUsers(@RequestParam(value="page", defaultValue="0") int page){
-		System.out.println("page number=" + page);
-		return userService.searchUsers();
-	}
-	
+	/*
+	 * @GetMapping("/users") public List<User>
+	 * getAllUsers(@RequestParam(value="page", defaultValue="0") int page){
+	 * System.out.println("page number=" + page); return userService.searchUsers();
+	 * }
+	 */
 	//.. 		http://localhost:8080/users/3
 	// 사용자 상세보기
 	@GetMapping("/users/{userId}")
